@@ -3,7 +3,7 @@ use std::fs;
 use dateparser;
 use chrono::prelude::Utc;
 
-/// Print text progress for character count and due date
+/// Print text progress for character count, start and due date
 #[derive(Parser)]
 #[command(version)]
 struct Cli {
