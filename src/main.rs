@@ -40,7 +40,7 @@ fn main() {
     let percent_should = (days_elapsed as f64 / days_total as f64) * 100.0;
     // delta
     let percent_delta = percent_done - percent_should;
-    // FIXME
+    // print progress
     println!(
         "text size: {}, due size: {}, due for: {}, days left: {}",
         text_size, args.count, args.date, days_left
