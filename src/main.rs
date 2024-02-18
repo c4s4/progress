@@ -1,7 +1,7 @@
-use clap::Parser;
-use std::fs;
-use dateparser;
 use chrono::prelude::Utc;
+use clap::Parser;
+use dateparser;
+use std::fs;
 
 /// Print text progress for character count, start and due date
 #[derive(Parser)]
@@ -41,6 +41,12 @@ fn main() {
     // delta
     let percent_delta = percent_done - percent_should;
     // FIXME
-    println!("text size: {}, due size: {}, due for: {}, days left: {}", text_size, args.count, args.date, days_left);
-    println!("progress: {:.0}%, should be: {:.0}%, delta: {:.0}%", percent_done, percent_should, percent_delta);
+    println!(
+        "text size: {}, due size: {}, due for: {}, days left: {}",
+        text_size, args.count, args.date, days_left
+    );
+    println!(
+        "progress: {:.0}%, should be: {:.0}%, delta: {:.0}%",
+        percent_done, percent_should, percent_delta
+    );
 }
