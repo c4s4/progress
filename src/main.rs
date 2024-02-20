@@ -22,25 +22,31 @@ fn main() {
     // parse command line arguments
     let args = Cli::parse();
     // load text
-    let result = fs::read_to_string(args.file);
-    if result.is_err() {
-        error(format!("reading text file: {}", result.as_ref().err().unwrap()).as_str());
-    }
-    let text = result.unwrap();
+    let text = match fs::read_to_string(args.file) {
+        Ok(text) => text,
+        Err(err) => {
+            eprintln!("ERROR reading text file: {msg}");
+            process::exit(1);
+        }
+    };
     // count characters
     let text_size = text.chars().count();
     // start date
-    let result = dateparser::parse(&args.start);
-    if result.is_err() {
-        error(format!("parsing start date: {}", result.as_ref().err().unwrap()).as_str());
-    }
-    let date_start = result.unwrap();
+    let date_start = match dateparser::parse(&args.start) {
+        Ok(date) => date,
+        Err(err) => {
+            eprintln!("ERROR parsing start date: {err}");
+            process::exit(1);
+        }
+    };
     // due date
-    let result = dateparser::parse(&args.date);
-    if result.is_err() {
-        error(format!("parsing due date: {}", result.as_ref().err().unwrap()).as_str());
-    }
-    let date_due = result.unwrap();
+    let date_due = match dateparser::parse(&args.date) {
+        Ok(date) => date,
+        Err(err) => {
+            eprintln!("ERROR parsing due date: {err}");
+            process::exit(1);
+        }
+    };
     // compute number of days to due date
     let days_left = date_due.signed_duration_since(Utc::now()).num_days();
     // total number of days
@@ -62,10 +68,4 @@ fn main() {
         "progress: {:.0}%, should be: {:.0}%, delta: {:.0}%",
         percent_done, percent_should, percent_delta
     );
-}
-
-/// Print error message and exit
-fn error(msg: &str) {
-    eprintln!("ERROR {msg}");
-    process::exit(1);
 }
