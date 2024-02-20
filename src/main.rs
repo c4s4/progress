@@ -25,7 +25,7 @@ fn main() {
     let text = match fs::read_to_string(args.file) {
         Ok(text) => text,
         Err(err) => {
-            eprintln!("ERROR reading text file: {msg}");
+            eprintln!("ERROR reading text file: {err}");
             process::exit(1);
         }
     };
